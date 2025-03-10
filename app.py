@@ -11,6 +11,10 @@ logger = logging.getLogger(__name__)
 app = Flask(__name__)
 app.secret_key = os.environ.get("SESSION_SECRET")
 
+# Get the Replit URL for OAuth callback
+REPLIT_URL = f"https://{os.environ.get('REPL_SLUG')}.{os.environ.get('REPL_OWNER')}.repl.co"
+logger.info(f"Application URL: {REPLIT_URL}")
+
 # Initialize services
 github_service = GitHubService()
 openai_service = OpenAIService()
