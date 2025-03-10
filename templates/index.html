@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="text-center py-5">
+    <h1 class="display-4 mb-4">GitHub Repository Description Generator</h1>
+    <p class="lead mb-4">
+        Automatically generate professional descriptions for your GitHub repositories using AI
+    </p>
+    
+    <div class="card bg-dark mb-4">
+        <div class="card-body">
+            <h5 class="card-title">Features</h5>
+            <ul class="list-unstyled">
+                <li><i class="bi bi-check-circle-fill text-success"></i> Connect with your GitHub account</li>
+                <li><i class="bi bi-check-circle-fill text-success"></i> Analyze repository content</li>
+                <li><i class="bi bi-check-circle-fill text-success"></i> Generate AI-powered descriptions</li>
+                <li><i class="bi bi-check-circle-fill text-success"></i> Update multiple repositories at once</li>
+            </ul>
+        </div>
+    </div>
+
+    <a href="{{ url_for('github_auth') }}" class="btn btn-lg btn-primary">
+        <i class="bi bi-github"></i> Connect with GitHub
+    </a>
+</div>
+{% endblock %}

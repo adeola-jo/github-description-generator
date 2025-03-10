@@ -1,0 +1,26 @@
+/* Custom styles to complement Bootstrap dark theme */
+.card {
+    border-color: var(--bs-gray-700);
+}
+
+.card:hover {
+    border-color: var(--bs-primary);
+    transition: border-color 0.3s ease;
+}
+
+.badge {
+    font-size: 0.85em;
+}
+
+.bi {
+    margin-right: 0.25rem;
+}
+
+.form-check-input:checked {
+    background-color: var(--bs-primary);
+    border-color: var(--bs-primary);
+}
+
+.alert {
+    border-width: 2px;
+}

@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2 class="mb-4">Your Repositories</h2>
+
+{% if results %}
+<div class="alert alert-info">
+    <h4 class="alert-heading">Update Results</h4>
+    <ul class="list-unstyled">
+    {% for result in results %}
+        <li>
+            <strong>{{ result.name }}</strong>: 
+            {{ result.description }}
+        </li>
+    {% endfor %}
+    </ul>
+</div>
+{% endif %}
+
+<form action="{{ url_for('generate_descriptions') }}" method="POST">
+    <div class="mb-3">
+        <button type="submit" class="btn btn-primary">
+            <i class="bi bi-magic"></i> Generate Descriptions for Selected
+        </button>
+    </div>
+
+    <div class="row">
+        {% for repo in repositories %}
+        <div class="col-md-6 mb-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="form-check mb-2">
+                        <input type="checkbox" class="form-check-input" name="repos" value="{{ repo.name }}" id="repo-{{ loop.index }}">
+                        <label class="form-check-label" for="repo-{{ loop.index }}">
+                            <h5 class="card-title">{{ repo.name }}</h5>
+                        </label>
+                    </div>
+                    
+                    <p class="card-text">
+                        {% if repo.description %}
+                        {{ repo.description }}
+                        {% else %}
+                        <span class="text-muted">No description available</span>
+                        {% endif %}
+                    </p>
+                    
+                    <div class="d-flex align-items-center">
+                        {% if repo.language %}
+                        <span class="badge bg-secondary me-2">{{ repo.language }}</span>
+                        {% endif %}
+                        <span class="me-2">
+                            <i class="bi bi-star-fill text-warning"></i> {{ repo.stars }}
+                        </span>
+                        <a href="{{ repo.url }}" target="_blank" class="ms-auto btn btn-sm btn-outline-primary">
+                            <i class="bi bi-box-arrow-up-right"></i> View
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</form>
+{% endblock %}
