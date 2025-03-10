@@ -33,15 +33,28 @@ def github_auth():
 @app.route('/callback')
 def github_callback():
     logger.debug("Received GitHub callback")
+    error = request.args.get('error')
+    if error:
+        error_description = request.args.get('error_description', 'Unknown error')
+        logger.error(f"GitHub OAuth error: {error} - {error_description}")
+        flash(f"GitHub authentication failed: {error_description}", 'danger')
+        return redirect(url_for('index'))
+
     code = request.args.get('code')
+    if not code:
+        logger.error("No authorization code received from GitHub")
+        flash('No authorization code received from GitHub', 'danger')
+        return redirect(url_for('index'))
+
     try:
+        logger.debug(f"Attempting to get access token with code: {code[:5]}...")
         access_token = github_service.get_access_token(code)
         session['github_token'] = access_token
         flash('Successfully authenticated with GitHub!', 'success')
         return redirect(url_for('repositories'))
     except Exception as e:
         logger.error(f"GitHub authentication error: {str(e)}")
-        flash('Failed to authenticate with GitHub', 'danger')
+        flash(f'Failed to authenticate with GitHub: {str(e)}', 'danger')
         return redirect(url_for('index'))
 
 @app.route('/repositories')
